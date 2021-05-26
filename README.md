@@ -1,4 +1,4 @@
-# Cowin_Whatsapp_Notifier
+# Get_Jabbed
 
 A Python Program that asks you for your Pincode or District and sends you a whatsapp message when slots are vaccant
 
