@@ -1,13 +1,16 @@
 import os
+import time
 import requests
 import json
 import tabulate
 from datetime import datetime, timedelta
-# from twilio.rest import Client
+# from twilio.rest import Clie4nt
 
 # account_sid = 'ACc'
 # auth_token = '6f'
 # client = Client(account_sid, auth_token)
+
+purl = ""
 
 
 def return_json(url):
@@ -78,6 +81,8 @@ def check_byDistrict(date):
     print()
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={}&date={}".format(
         district_id, date.strftime("%d-%m-%Y"))
+    global purl
+    purl = url
     return (get_data(url))
 
 
@@ -86,6 +91,8 @@ def check_byPin(date):
     print()
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode={}&date={}".format(
         district_pin, date.strftime("%d-%m-%Y"))
+    global purl
+    purl = url
     return (get_data(url))
 
 
@@ -122,12 +129,14 @@ else:
     print("Invalid Choice! Try again")
 
 
-if not dataset:
-    print("Sorry! No Vaccines Avalible.")
-else:
-    Table_FromDicList(dataset)
-    # message = client.messages.create(
-    #     from_='whatsapp:+2',
-    #     body="Vaccine slo1s Avalible!",
-    #     to='whatsapp:+91'
-    # )
+while not dataset:
+    dataset = get_data(purl)
+    print("No Vaccine found")
+    time.sleep(3)
+
+Table_FromDicList(dataset)
+# message = client.messages.create(
+#     from_='whatsapp:+2',
+#     body="Vaccine slo1s Avalible!",
+#     to='whatsapp:+91'
+# )
